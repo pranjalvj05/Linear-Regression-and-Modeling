@@ -1,0 +1,286 @@
+
+#Linear and Regression Model of Movies Data 
+
+#Setting working directory and load the movies data set 
+```{r}
+setwd("C:/Users/ddddd/Regression/_movies")
+```
+```{r}
+moviesdata <- load("C:/Users/ddddd/Regression/_movies/_movies.R")
+```
+#Installing packages and loading the libraries
+
+```{r}
+library(devtools)
+devtools::install_github("statswithr/statsr")
+```
+```{r}
+library(ggplot2)
+library(dplyr)
+library(statsr)
+library(corrplot)
+library(gridExtra)
+library(grid)
+```
+#About the Data
+Dataset has the collection from IMDB and Rotten Tomatoes websites. Here we are asked to analyse this data so we can find that what thing makes a movie popular? whether it's name , it's cast, it's director, it's genre ,i.e. whether it is a comedy movie, fictional, romantic, horror, etc.
+
+Both websites are working for the same thing but having different methods.
+
+Rotten Tomatoes is a reviewer website. It gives the reviews based on their critic reviews and popularity in fans and news rarrings etc. It is basically working for the tomatometer rating which breaks it's review criteria into different zones for example Rotten reviews which have lower ratings , certified fresh reviews have higher rattings and the fresh reviews have the rattings between these two.
+So by this kind of information one can easily determine and go for a movie or show which is worth watching.
+
+IDMB is also doing the similar things but it also includes some other imformations. It includes the movie rattings, shows and provides the critic reviews and upcoming best movies. 
+
+# Part 2: Research question
+
+There are various movies which are more popular than others so we are asked to find out this thing. So, I would like to do research about Rotten tomatoes website's working.So the research question is:
+
+Which elements give the most impact on the popularity of a movie on this website?
+
+
+Here, I am taking few varibles for this research: genre , critics_score, critics_rating, audience_score, audience_rating, best_dir_win, best_actress_win,
+best_actor_win, mpaa_rating, runtime etc.
+
+# Part 3: Exploratory data analysis
+Now, we will see the summary and plot the graph of each variables behavior or the clear view of representing the data. For this first I remove the varibles which are not usable to find the research or we can say the varibles should be excluded and for this purpose we first clean thias data set by removing those varibles. 
+
+Removing the varibles which are not in use for research purpose
+```{r}
+moviesdata$title<-NULL
+moviesdata$best_pic_nom<-NULL
+moviesdata$thtr_rel_year<-NULL
+moviesdata$title_type<-NULL
+moviesdata$studioimdb_rating<-NULL
+moviesdata$dvd_rel_year<-NULL
+moviesdata$dvd_rel_month<-NULL
+moviesdata$dvd_rel_day<-NULL
+moviesdata$imdb_num_votes<-NULL
+moviesdata$best_pic_win<-NULL
+moviesdata$top200_box<-NULL
+moviesdata$actor1<-NULL
+moviesdata$actor2<-NULL
+moviesdata$actor3<-NULL
+moviesdata$actor4<-NULL
+moviesdata$actor5<-NULL
+moviesdata$imdb_url<-NULL
+moviesdata$rt_url<-NULL
+moviesdata$director<-NULL
+moviesdata$dvd_rel_year<-NULL
+moviesdata$dvd_rel_month<-NULL
+moviesdata$dvd_rel_day<-NULL
+str(movies)
+```
+
+Now start plotting the graphs. 
+
+1.Plot of genres of movies
+```{r}
+library(ggplot2)
+ggplot(data=movies , aes(x=genre) ) + geom_bar(color = "red") + ggtitle("The genres") + theme(axis.title.x=element_blank()) + theme(axis.text.x = element_text(angle=270))
+```
+
+
+By this plot we observe the highest genre is Drama.
+
+
+Plot of ratings of critics
+```{r}
+plot(movies$critics_rating)
+```
+This plot tells the three types ratings of rotten tomatoes website.
+
+Plot of score of critics
+```{r}
+plot(movies$critics_score)
+```
+
+
+Plot of ratings of audience
+```{r}
+plot(movies$audience_rating)
+```
+
+
+This graph tells the audience ratings which is either upright or spilled.
+
+Plot of score of audience
+```{r}
+plot(movies$audience_score)
+```
+
+
+
+Plot of ratings of MPAA
+```{r}
+plot(movies$mpaa_rating)
+```
+
+
+Plot of runtime of movie
+```{r}
+plot(movies$runtime)
+```
+
+
+Plot of best director win the award
+```{r}
+plot(movies$best_dir_win)
+```
+
+Plot of best actor win the award
+```{r}
+plot(movies$best_actor_win)
+```
+
+
+Plot of best actress win the award
+```{r}
+plot(movies$best_actress_win)
+```
+
+After this EDA(Exploratory data analysis) , we see some facts of varibles used but the thing which impact the most ,i.e. for a movie rating which varibles are most essential , can't explained . so move on to the regression model which gives the best results to be predicted.
+
+
+
+
+#Part 4 Modelling
+
+Making a linear regression model, using lm() function.
+The main purpose is to find what makes a movie popular and critics score and , audience audience score effected it most. It mean while judging a movie to be worth watching we should see these varibles and this will give a best review.
+Here, I am applying multiple regression modelling in which every further step will exclude one varible and final model give the best prediction.
+
+First we include all the variables we see above for checking
+Note : Although critics rating , audience rating is also giving a clear view to predict a movie but here we don't take both of them because they are factor and we include only numerical varibles.
+
+
+```{r}
+my_model_1 = lm( critics_score ~ genre + audience_score + runtime + mpaa_rating + best_actor_win + best_actress_win + best_dir_win  , data = movies)
+summary(my_model_1)
+```
+```{r}
+plot(my_model_1)
+```
+
+
+Excluding runtime
+```{r}
+my_model_2 = lm( critics_score ~ genre + audience_score + mpaa_rating + best_actor_win + best_actress_win + best_dir_win  , data = movies)
+summary(my_model_2)
+```
+```{r}
+plot(my_model_2)
+```
+
+
+Excluding mpaa_rating
+```{r}
+my_model_2 = lm( critics_score ~ genre + audience_score  + best_actor_win + best_actress_win + best_dir_win  , data = movies)
+summary(my_model_2)
+```
+
+```{r}
+plot(my_model_2)
+```
+
+
+Excluding best_actor_win
+```{r}
+my_model_3 = lm( critics_score ~ genre + audience_score  + best_actress_win + best_dir_win  , data = movies)
+summary(my_model_3)
+```
+
+```{r}
+plot(my_model_3)
+```
+
+
+Excluding best_actress_win
+```{r}
+my_model_4 = lm( critics_score ~ genre + audience_score   + best_dir_win  , data = movies)
+summary(my_model_4)
+```
+
+```{r}
+plot(my_model_4)
+```
+
+
+Finally , we exclude the variable best_dir_win for getting the final regression model,i.e. my_model_regre which only includes varibles critics_score, genre of movies and audience_score 
+
+```{r}
+my_model_regre = lm( critics_score ~ genre + audience_score , data = movies)
+summary(my_model_regre)
+```
+```{r}
+plot(my_model_regre)
+```
+
+
+#Part 5. Prediction
+
+I choose Dangal movie released in 2016 to predict my model and check it out it's reviews,i.e. score from rotten tomatoes website.
+I collected the information about the movie from the website "https://www.rottentomatoes.com" 
+
+1. genre = Drama,  2. score of critics = 92 and 3. score of audience = 95 .
+
+The interval taken is confidence.
+```{r}
+
+library(caret)
+
+predict(my_model_regre, data.frame(genre="Drama",
+critics_score = 92, audience_score =95), interval = "confidence")
+
+confint(my_model_regre)
+
+par("mar")
+par(mar=c(.2,.2,.2,.2))
+pairs(~audience_score +genre +critics_score, data = movies,
+main = "Simple Scatterplot Matrix")
+
+```
+
+Result of prediction :
+
+By this prediction modelling, we are 95% confident that the audience_score would be between 81% and 98% .
+After comparing this score to it's actual present score on rottentomatoes website we see that audience score is 95% on this site, and which is in the predicted range..
+
+#Part 6. Conclusion : 
+
+This project help me to understand the exploratory data analysis analysis, modeling and prediction and also made me understand the concept of the ratings of movies. 
+According to the research question, I found that the most impact putting variables for getting the best movie review on rotten tomatoes website are the score of critics and the audience.
+
+I found some shortcomings while in some research senerio for which I started reading more datasets and website data so I can understand and find out the researchable questions.
+
+For the further research I recommend that we can also find that "if there is any impact on the moovie rating based on it's release month because I realize that in some countrys outside India(my country) they have snowfall in particular months and they enjoy the outings in summers(most probably), so we can make a model which can predict this."
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
