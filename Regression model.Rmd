@@ -1,5 +1,5 @@
 
-#Predictions for Movie Ratings
+#Movie Ratings Prediction 
 
 #Setting working directory and load the movies data set 
 ```{r}
