@@ -23,7 +23,7 @@ library(gridExtra)
 library(grid)
 ```
 #About the Data
-Dataset has the collection from IMDB and Rotten Tomatoes websites. Here we are asked to analyse this data so we can find that what thing makes a movie popular? whether it's name , it's cast, it's director, it's genre ,i.e. whether it is a comedy movie, fictional, romantic, horror, etc.
+Dataset has the collection from IMDB and Rotten Tomatoes websites. Here we analyse this data so we can find that what thing makes a movie popular? whether its name , its cast, its director, its genre ,i.e. whether it is a comedy movie, fictional, romantic, horror, etc.
 
 Both websites are working for the same thing but having different methods.
 
@@ -34,7 +34,7 @@ IDMB is also doing the similar things but it also includes some other imformatio
 
 # Part 2: Research question
 
-There are various movies which are more popular than others so we are asked to find out this thing. So, I would like to do research about Rotten tomatoes website's working.So the research question is:
+There are various movies which are more popular than others so we need to find out this thing. So, I would like to do research about Rotten tomatoes website's working.So the research question is:
 
 Which elements give the most impact on the popularity of a movie on this website?
 
@@ -248,39 +248,9 @@ After comparing this score to it's actual present score on rottentomatoes websit
 
 #Part 6. Conclusion : 
 
-This project help me to understand the exploratory data analysis analysis, modeling and prediction and also made me understand the concept of the ratings of movies. 
+This project help me to understand modeling and prediction and also made me understand the concept of the ratings of movies. 
 According to the research question, I found that the most impact putting variables for getting the best movie review on rotten tomatoes website are the score of critics and the audience.
 
 I found some shortcomings while in some research senerio for which I started reading more datasets and website data so I can understand and find out the researchable questions.
 
 For the further research I recommend that we can also find that "if there is any impact on the moovie rating based on it's release month because I realize that in some countrys outside India(my country) they have snowfall in particular months and they enjoy the outings in summers(most probably), so we can make a model which can predict this."
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
