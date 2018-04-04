@@ -1,5 +1,5 @@
 
-#Linear and Regression Model of Movies Data 
+#Predictions for Movie Ratings
 
 #Setting working directory and load the movies data set 
 ```{r}
